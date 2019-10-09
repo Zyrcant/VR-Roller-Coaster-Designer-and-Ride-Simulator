@@ -45,12 +45,16 @@ public class VirtualHand : MonoBehaviour {
 	[Tooltip("The button required to be pressed to grab objects.")]
 	public CommonButton button;
 
+	[Tooltip("The object to spawn when clicking in an empty area.")]
+	public GameObject spawnPrefab;
+
 	[Tooltip("The speed amplifier for thrown objects. One unit is physically realistic.")]
 	public float speed = 1.0f;
 
 	// Private interaction variables
 	VirtualHandState state;
 	FixedJoint grasp;
+	private GameObject spawnedObject;
 
 	// Called at the end of the program initialization
 	void Start () {
@@ -78,6 +82,13 @@ public class VirtualHand : MonoBehaviour {
 
 			// Process current open state
 			else {
+				if (button.GetPress()) {
+					spawnedObject = Instantiate(spawnPrefab, hand.position, Quaternion.identity);
+					spawnedObject.transform.parent = GameObject.Find("Spline").transform;
+					var spline = GameObject.Find("Spline").GetComponent<Spline>();
+					spline.points.Add(spawnedObject);
+					state = VirtualHandState.Touching;
+				}
 
 				// Nothing to do for open
 			}

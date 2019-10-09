@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571322, b: 0.30692163, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -113,44 +113,46 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &109275915
+--- !u!1 &29386200
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 109275919}
-  - component: {fileID: 109275918}
-  - component: {fileID: 109275917}
-  - component: {fileID: 109275916}
-  - component: {fileID: 109275921}
-  - component: {fileID: 109275920}
+  - component: {fileID: 29386204}
+  - component: {fileID: 29386203}
+  - component: {fileID: 29386202}
+  - component: {fileID: 29386201}
+  - component: {fileID: 29386206}
+  - component: {fileID: 29386205}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!135 &109275916
-SphereCollider:
+--- !u!64 &29386201
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 109275915}
+  m_GameObject: {fileID: 29386200}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &109275917
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &29386202
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 109275915}
+  m_GameObject: {fileID: 29386200}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -160,7 +162,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 24e73955ba8338f41a24cd3aea0285a6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -180,45 +182,44 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &109275918
+--- !u!33 &29386203
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 109275915}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &109275919
+  m_GameObject: {fileID: 29386200}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &29386204
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 109275915}
+  m_GameObject: {fileID: 29386200}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.274, y: 1.61167, z: 0.774}
-  m_LocalScale: {x: 0.17363, y: 0.17363, z: 0.17363}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 250, y: 1, z: 250}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &109275920
+--- !u!114 &29386205
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 109275915}
+  m_GameObject: {fileID: 29386200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b24b0ed541a94655bab28e1a318582d, type: 3}
+  m_Script: {fileID: 11500000, guid: e417a2d3cc1e14e8da90a06eb9db8d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   shape: 0
-  useGravity: 0
---- !u!54 &109275921
+--- !u!54 &29386206
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 109275915}
+  m_GameObject: {fileID: 29386200}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -263,7 +264,7 @@ Transform:
   - {fileID: 1507236427}
   - {fileID: 836011189}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &601383784 stripped
 MonoBehaviour:
@@ -320,7 +321,50 @@ MonoBehaviour:
   tracker: {fileID: 2029985817}
   hand: {fileID: 1907996938}
   button: {fileID: 809148350}
+  spawnPrefab: {fileID: 1846134107677082, guid: 006aaed7d8c382c46aff18ae2835839a,
+    type: 2}
   speed: 1
+--- !u!1 &1225120216
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1225120217}
+  - component: {fileID: 1225120218}
+  m_Layer: 0
+  m_Name: Spline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1225120217
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1225120216}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.5, y: 10001, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1225120218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1225120216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29341599e0f80204b9ba29c784aa7f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: []
 --- !u!1001 &1338565201
 Prefab:
   m_ObjectHideFlags: 0
@@ -547,6 +591,8 @@ MonoBehaviour:
   tracker: {fileID: 432490842}
   hand: {fileID: 601383784}
   button: {fileID: 1719462792}
+  spawnPrefab: {fileID: 1846134107677082, guid: 006aaed7d8c382c46aff18ae2835839a,
+    type: 2}
   speed: 1
 --- !u!114 &1719462792 stripped
 MonoBehaviour:
