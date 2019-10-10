@@ -106,23 +106,23 @@ public class VirtualHand_Left : MonoBehaviour
             // If the hand is touching something and the button is pressed
             else if (hand.triggerOngoing && button.GetPress())
             {
+                // If object is destroyed, ignore it
+                if(!hand.ongoingTriggers[0]) return;
 
                 // Fetch touched target
                 Collider target = hand.ongoingTriggers[0];
+                
                 // Create a fixed joint between the hand and the target
-                if (target.gameObject != null)
+                grasp = target.gameObject.AddComponent<FixedJoint>();
+                
+                // Set the connection
+                grasp.connectedBody = hand.gameObject.GetComponent<Rigidbody>();
+                if (grasp.gameObject.GetComponent<Sphere>().type == "Sphere")
                 {
-                    grasp = target.gameObject.AddComponent<FixedJoint>();
-                    // Set the connection
-                    grasp.connectedBody = hand.gameObject.GetComponent<Rigidbody>();
-                    if (grasp.gameObject.GetComponent<Sphere>().type == "Sphere")
-                    {
-                        Debug.Log("touching sphere");
-                        var sphere = grasp.gameObject;
-                        DestroyImmediate(grasp);
-                        Destroy(sphere);
-                        state = VirtualHandState.Open;
-                    }
+                    var sphere = grasp.gameObject;
+                    DestroyImmediate(grasp);
+                    Destroy(sphere);
+                    state = VirtualHandState.Open;
                 }
                 state = VirtualHandState.Open;
             }
