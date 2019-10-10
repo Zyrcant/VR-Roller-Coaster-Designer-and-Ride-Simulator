@@ -83,7 +83,9 @@ public class Interactive : Element {
 
 	// Called first by every OnCollision function
 	protected virtual void OnCollisionUpdate () {
-
+		if (enteredCollisions == null) {
+			Start();
+		}
 		// If an OnCollision function has not already been called this physics frame
 		if (!onCollision) {
 			// One has now been called

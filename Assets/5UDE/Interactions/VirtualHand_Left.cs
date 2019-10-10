@@ -120,6 +120,7 @@ public class VirtualHand_Left : MonoBehaviour
                 if (grasp.gameObject.GetComponent<Sphere>().type == "Sphere")
                 {
                     var sphere = grasp.gameObject;
+                    sphere.GetComponentInParent<Spline>().points.Remove(sphere);
                     DestroyImmediate(grasp);
                     Destroy(sphere);
                     state = VirtualHandState.Open;
