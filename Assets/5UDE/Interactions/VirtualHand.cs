@@ -106,12 +106,13 @@ public class VirtualHand : MonoBehaviour {
 			}
 
 			// If the hand is touching something and the button is pressed
-			else if (hand.triggerOngoing && button.GetPress ()) {
+			else if (hand.triggerOngoing && button.GetPress()) {
 
 				// Fetch touched target
 				Collider target = hand.ongoingTriggers [0];
 				// Create a fixed joint between the hand and the target
 				grasp = target.gameObject.AddComponent<FixedJoint> ();
+				
 				// Set the connection
 				grasp.connectedBody = hand.gameObject.GetComponent<Rigidbody> ();
 
@@ -141,6 +142,7 @@ public class VirtualHand : MonoBehaviour {
 
 				// Get rigidbody of grasped target
 				Rigidbody target = grasp.GetComponent<Rigidbody> ();
+				
 				// Break grasp
 				DestroyImmediate (grasp);
 
@@ -154,6 +156,10 @@ public class VirtualHand : MonoBehaviour {
 
 			// Process current holding state
 			else {
+				
+				// Redraw Spline
+				GameObject.Find("Spline").GetComponent<Spline>().RedrawSplineForObject(grasp.gameObject);
+				//GameObject.Find("Spline").GetComponent<Spline>().RedrawSpline();
 
 				// Nothing to do for holding
 			}

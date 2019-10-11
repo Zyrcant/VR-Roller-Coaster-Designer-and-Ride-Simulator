@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028328, g: 0.22571322, b: 0.30692163, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -321,7 +321,7 @@ MonoBehaviour:
   tracker: {fileID: 2029985817}
   hand: {fileID: 1907996938}
   button: {fileID: 809148350}
-  spawnPrefab: {fileID: 1846134107677082, guid: 006aaed7d8c382c46aff18ae2835839a,
+  spawnPrefab: {fileID: 1105559706037508, guid: 7f83023a12b9c5e49a5f77ec520cd555,
     type: 2}
   speed: 1
 --- !u!1 &1203664005
@@ -394,6 +394,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: []
   curvePoints: []
+  curvePointsDist: []
 --- !u!1001 &1338565201
 Prefab:
   m_ObjectHideFlags: 0
@@ -447,15 +448,27 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012196094192, guid: e43af32dbae9d467e869346a2bd6a834, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.008
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4000012196094192, guid: e43af32dbae9d467e869346a2bd6a834, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.709
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000012196094192, guid: e43af32dbae9d467e869346a2bd6a834, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.177
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011631927640, guid: e43af32dbae9d467e869346a2bd6a834, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011631927640, guid: e43af32dbae9d467e869346a2bd6a834, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013656831720, guid: e43af32dbae9d467e869346a2bd6a834, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e43af32dbae9d467e869346a2bd6a834, type: 2}
@@ -620,7 +633,7 @@ MonoBehaviour:
   tracker: {fileID: 432490842}
   hand: {fileID: 601383784}
   button: {fileID: 1719462792}
-  spawnPrefab: {fileID: 1846134107677082, guid: 006aaed7d8c382c46aff18ae2835839a,
+  spawnPrefab: {fileID: 1105559706037508, guid: 7f83023a12b9c5e49a5f77ec520cd555,
     type: 2}
   speed: 1
 --- !u!114 &1719462792 stripped
