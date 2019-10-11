@@ -87,6 +87,7 @@ public class VirtualHand : MonoBehaviour {
 					spawnedObject.transform.parent = GameObject.Find("Spline").transform;
 					var spline = GameObject.Find("Spline").GetComponent<Spline>();
 					spline.points.Add(spawnedObject);
+                    spline.RedrawSpline();
 					state = VirtualHandState.Touching;
 				}
 

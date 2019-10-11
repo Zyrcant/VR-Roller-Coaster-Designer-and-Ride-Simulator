@@ -76,7 +76,6 @@ public class VirtualHand_Left : MonoBehaviour
         // If state is open
         if (state == VirtualHandState.Open)
         {
-            Debug.Log("State is open");
             // If the hand is touching something
             if (hand.triggerOngoing)
             {
@@ -121,6 +120,7 @@ public class VirtualHand_Left : MonoBehaviour
                 {
                     var sphere = grasp.gameObject;
                     sphere.GetComponentInParent<Spline>().points.Remove(sphere);
+                    sphere.GetComponentInParent<Spline>().RedrawSpline();
                     DestroyImmediate(grasp);
                     Destroy(sphere);
                     state = VirtualHandState.Open;
