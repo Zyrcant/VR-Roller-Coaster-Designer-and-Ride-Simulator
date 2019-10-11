@@ -55,6 +55,7 @@ public class VirtualHand : MonoBehaviour {
 	VirtualHandState state;
 	FixedJoint grasp;
 	private GameObject spawnedObject;
+	private Spline spline;
 
 	// Called at the end of the program initialization
 	void Start () {
@@ -85,9 +86,11 @@ public class VirtualHand : MonoBehaviour {
 				if (button.GetPress()) {
 					spawnedObject = Instantiate(spawnPrefab, hand.position, Quaternion.identity);
 					spawnedObject.transform.parent = GameObject.Find("Spline").transform;
-					var spline = GameObject.Find("Spline").GetComponent<Spline>();
+					if(spline == null)
+						spline = GameObject.Find("Spline").GetComponent<Spline>();
 					spline.points.Add(spawnedObject);
-                    spline.RedrawSpline();
+					spline.RedrawSplineForAdd(spawnedObject);
+					//spline.RedrawSpline();
 					state = VirtualHandState.Touching;
 				}
 
