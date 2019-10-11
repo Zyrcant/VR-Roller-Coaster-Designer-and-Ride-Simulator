@@ -111,20 +111,25 @@ public class VirtualHand_Left : MonoBehaviour
                 // Fetch touched target
                 Collider target = hand.ongoingTriggers[0];
                 
+                if (target.gameObject.GetComponent<Sphere>().type == "Sphere")
+                {
+                    var sphere = target.gameObject;
+//                    sphere.GetComponentInParent<Spline>().points.Remove(sphere);
+                    if (sphere.GetComponent<FixedJoint>() != null) {
+                        return;
+                    }
+
+                    sphere.GetComponentInParent<Spline>().RedrawSplineForDelete(sphere);
+                    Destroy(sphere);
+                    state = VirtualHandState.Open;
+                }
+                
                 // Create a fixed joint between the hand and the target
                 grasp = target.gameObject.AddComponent<FixedJoint>();
                 
                 // Set the connection
                 grasp.connectedBody = hand.gameObject.GetComponent<Rigidbody>();
-                if (grasp.gameObject.GetComponent<Sphere>().type == "Sphere")
-                {
-                    var sphere = grasp.gameObject;
-                    sphere.GetComponentInParent<Spline>().points.Remove(sphere);
-                    sphere.GetComponentInParent<Spline>().RedrawSpline();
-                    DestroyImmediate(grasp);
-                    Destroy(sphere);
-                    state = VirtualHandState.Open;
-                }
+                
                 state = VirtualHandState.Open;
             }
 

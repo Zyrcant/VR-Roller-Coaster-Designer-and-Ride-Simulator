@@ -158,8 +158,7 @@ public class VirtualHand : MonoBehaviour {
 			else {
 				
 				// Redraw Spline
-				GameObject.Find("Spline").GetComponent<Spline>().RedrawSplineForObject(grasp.gameObject);
-				//GameObject.Find("Spline").GetComponent<Spline>().RedrawSpline();
+				GameObject.Find("Spline").GetComponent<Spline>().RedrawSplineForModify(grasp.gameObject);
 
 				// Nothing to do for holding
 			}

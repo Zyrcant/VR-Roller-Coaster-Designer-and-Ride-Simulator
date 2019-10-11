@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 public class Spline : MonoBehaviour
@@ -31,7 +32,7 @@ public class Spline : MonoBehaviour
     }
     
     // Calculates which lines need to be redrawn for the spline 
-    public void RedrawSplineForObject(GameObject target)
+    public void RedrawSplineForModify(GameObject target)
     {
         int index = points.IndexOf(target);
         points[index].transform.position = target.transform.position;
@@ -41,12 +42,39 @@ public class Spline : MonoBehaviour
         {
             for (int i = -2; i <= 2; i++)
             {
-                if((index + i) > -1 && (index + i) < (points.Count - 1))
+                if(index + i > -1 && index + i < points.Count - 1)
                     RecalculateCatmullRom(index + i);
             }
         }
     }
 
+    // Recalculates Catmull Rom for deletion of Object
+    public void RedrawSplineForDelete(GameObject target)
+    {
+        int index = points.IndexOf(target);
+
+        points.Remove(target);
+        int lastIndex = 0;
+        if (points.Count >= 2)
+        {
+            for (int i = -2; i <= 2; i++) {
+                if (index + i > -1 && index + i < points.Count - 1) {
+                    RecalculateCatmullRomDelete(index + i);
+                    lastIndex = i;
+                }
+            }
+        }
+
+        if (points.Count >= 1) {
+            Transform lines = GameObject.Find("Lines").transform;
+            lastIndex = Math.Min(points.Count-index-1, 2);
+            for (int x = ((index+lastIndex) * (num_segments)); x < ((index+lastIndex+1) * (num_segments)); x++) {
+                DestroyImmediate(lines.GetChild((index + lastIndex) * (num_segments)).gameObject);
+            }
+        }
+
+    }
+    
     void CalculateCatmullRom(int index)
     {
         Vector3 p0, p1, p2, p3;
@@ -79,6 +107,7 @@ public class Spline : MonoBehaviour
 
             //Draw this line segment
             LineRenderer line = new GameObject("Line").AddComponent<LineRenderer>();
+            line.gameObject.name = "Line " + index + ": " + (i-1);
             line.transform.parent = GameObject.Find("Lines").transform;
             line.startWidth = 0.025f;
             line.endWidth = 0.025f;
@@ -126,8 +155,50 @@ public class Spline : MonoBehaviour
             float t = i / (float)num_segments;
             Vector3 newPos = GetCatmullRom(t, p0, p1, p2, p3);
 
-            LineRenderer line = lines.transform.GetChild(index * num_segments + i).gameObject.GetComponent<LineRenderer>();
+            LineRenderer line = lines.transform.GetChild(index * num_segments + i - 1).gameObject.GetComponent<LineRenderer>();
+            line.gameObject.name = "Line " + index + ": " + (i-1);
             line.material.color = Color.blue;
+            line.SetPosition(0, lastPos);
+            line.SetPosition(1, newPos);
+            
+            //add to curve points list
+            curvePoints[index*num_segments + i] = newPos;
+            curvePointsDist[index*num_segments+i] = (Vector3.Distance(lastPos,newPos) + curvePointsDist[curvePointsDist.Count - 1]);
+            lastPos = newPos;
+        }
+    }
+    
+    void RecalculateCatmullRomDelete(int index)
+    {
+        Debug.Log("Index: " + index);
+        Vector3 p0, p1, p2, p3;
+
+        p1 = points[index].transform.position;
+        p2 = points[index + 1].transform.position;
+
+        if (index > 0)
+            p0 = points[index - 1].transform.position;
+        else
+            p0 = p1 * 2 - p2;
+        
+        if (index < points.Count - 2)
+            p3 = points[index + 2].transform.position;
+        else
+            p3 = p2 * 2 - p1;
+        
+        Vector3 lastPos = p1;
+
+        curvePoints[index * num_segments] = lastPos;
+
+        GameObject lines = GameObject.Find("Lines");
+        
+        for (int i = 1; i <= num_segments; i++)
+        {
+            float t = i / (float)num_segments;
+            Vector3 newPos = GetCatmullRom(t, p0, p1, p2, p3);
+
+            LineRenderer line = lines.transform.GetChild(index * num_segments + i).gameObject.GetComponent<LineRenderer>();
+            line.material.color = Color.green;
             line.SetPosition(0, lastPos);
             line.SetPosition(1, newPos);
             
