@@ -10,6 +10,10 @@ public class Spline : MonoBehaviour
     public List<Vector3> curvePoints = new List<Vector3>();
     public List<float> curvePointsDist = new List<float>();
 
+    public List<float> normalizedCurvePointsDist = new List<float>();
+
+    
+
     public void RedrawSpline()
     {
         //destroys each line and redraws
@@ -22,11 +26,13 @@ public class Spline : MonoBehaviour
             for (int i = 0; i < points.Count - 1; i++) {
                 CalculateCatmullRom(i);
             }
+            normalizeDists();
         }
     }
 
     public void RedrawSplineForAdd(GameObject target)
     {
+        CalculateQuaternions();
         int index = points.IndexOf(target);
 
         if (points.Count >= 2) {
@@ -36,6 +42,7 @@ public class Spline : MonoBehaviour
             }
 
             CalculateCatmullRom(index - 1);
+        normalizeDists();
         }
     }
 
@@ -51,6 +58,7 @@ public class Spline : MonoBehaviour
                 if (index + i > -1 && index + i < points.Count - 1)
                     RecalculateCatmullRom(index + i);
             }
+            normalizeDists();
         }
     }
 
@@ -58,6 +66,8 @@ public class Spline : MonoBehaviour
     public void RedrawSplineForDelete(GameObject target)
     {
         int index = points.IndexOf(target);
+        
+        CalculateQuaternions();
 
         points.Remove(target);
         int lastIndex = 0;
@@ -66,6 +76,8 @@ public class Spline : MonoBehaviour
                 if (index + i > -1 && index + i < points.Count - 1)
                     RecalculateCatmullRom(index + i);
             }
+            
+        normalizeDists();
         }
 
         if (points.Count >= 1) {
@@ -74,6 +86,7 @@ public class Spline : MonoBehaviour
             for (int x = ((index + lastIndex) * (numSegments)); x < ((index + lastIndex + 1) * (numSegments)); x++) {
                 DestroyImmediate(lines.GetChild((index + lastIndex) * (numSegments)).gameObject);
             }
+            
         }
     }
 
@@ -181,4 +194,33 @@ public class Spline : MonoBehaviour
 
         return pos;
     }
+
+    void CalculateQuaternions() {
+        for(int i = 0; i < points.Count-1; i++) {
+            if(i == 0)
+                points[i].transform.LookAt(points[i+1].transform);
+            else
+                points[i].transform.rotation = Quaternion.LookRotation(points[i+1].transform.position - points[i-1].transform.position, Vector3.up);
+                // points[i].transform.LookAt((points[i+1].transform.position + points[i-1].transform.position)/2);
+        }
+    }
+
+    void normalizeDists() {
+        float max = curvePointsDist[curvePointsDist.Count-1];
+        for (int i = 0; i < curvePointsDist.Count; i++) {
+            if(normalizedCurvePointsDist.Count > i)
+                normalizedCurvePointsDist[i] = curvePointsDist[i] / max;
+            else
+                normalizedCurvePointsDist.Add(curvePointsDist[i]/max);
+        }
+    }
+
+    public int indexOfDist(float dist) {
+        for(int i = 0; i < curvePointsDist.Count; i++) {
+            if(dist < normalizedCurvePointsDist[i])
+                return i;
+        }
+        return -1;
+    }
+
 }

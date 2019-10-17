@@ -86,8 +86,13 @@ public class VirtualHand : MonoBehaviour {
 				if (button.GetPress()) {
 					spawnedObject = Instantiate(spawnPrefab, hand.position, Quaternion.identity);
 					spawnedObject.transform.parent = GameObject.Find("Spline").transform;
+					spawnedObject.GetComponent<Rigidbody>().freezeRotation = true;
 					if(spline == null)
 						spline = GameObject.Find("Spline").GetComponent<Spline>();
+					if(spline.points.Count == 0){
+						GameObject.Find("Rider").GetComponent<Transform>().position = spawnedObject.transform.position;
+						GameObject.Find("Rider").GetComponent<Transform>().rotation = spawnedObject.transform.rotation;
+					}
 					spline.points.Add(spawnedObject);
 					spline.RedrawSplineForAdd(spawnedObject);
 					//spline.RedrawSpline();

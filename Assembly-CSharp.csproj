@@ -15,11 +15,11 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{C1458822-6DD4-10E7-C6E7-B5C1C3AE64E9}</ProjectGuid>
+    <ProjectGuid>{AF0DC098-D517-B4BB-E998-E93D250E245C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
   </PropertyGroup>
@@ -57,6 +57,12 @@
     <Reference Include="UnityEditor">
       <HintPath>C:\Program Files\Unity\Editor\Data\Managed/UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions">
+      <HintPath>C:\Program Files\Unity\Editor\Data\PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions">
+      <HintPath>C:\Program Files\Unity\Editor\Data\PlaybackEngines/iOSSupport\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\5UDE\Features\Affect.cs" />
@@ -82,29 +88,9 @@
     <Compile Include="Assets\5UDE\Systems\Vive\Scripts\ViveButton.cs" />
     <Compile Include="Assets\5UDE\Systems\Vive\Scripts\ViveTracker.cs" />
     <Compile Include="Assets\5UDE\Systems\Vive\Scripts\ViveVibration.cs" />
+    <Compile Include="Assets\Scripts\Rider.cs" />
     <Compile Include="Assets\Scripts\Sphere.cs" />
     <Compile Include="Assets\Scripts\Spline.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Bezier\CubicBezierCurve.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Bezier\Spline.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Bezier\SplineNode.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Bezier\SplineSample.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Bezier\SplineSmoother.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleContortAlong.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleFollowSpline.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleGrowingRoot.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleSower.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleTentacle.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleTrack.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Example\RopeBuilder.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\ExtrusionSegment.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\MeshBender.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\MeshVertex.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\SourceMesh.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\SplineExtrusion.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\SplineMeshTiling.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Utils\CameraUtility.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Utils\MeshUtility.cs" />
-    <Compile Include="Assets\SplineMesh\Scripts\Utils\UOUtility.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_Teleporter.cs" />
@@ -211,7 +197,6 @@
     <None Include="Assets\SteamVR\Resources\SteamVR_ClearAll.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Hints\Shaders\ControllerButtonHints.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Teleport\Shaders\Highlight.shader" />
-    <None Include="Assets\SplineMesh\Doc.txt" />
     <None Include="Assets\SteamVR\Resources\SteamVR_SphericalProjection.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_AlphaOut.shader" />
     <None Include="Assets\SteamVR\readme.txt" />
@@ -220,16 +205,16 @@
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Readme_InteractionSystem.txt" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>D:/Programming/Unity/VR-Roller-Coaster-Designer-and-Ride-Simulator/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/Programming/Unity/VR-Roller-Coaster-Designer-and-Ride-Simulator/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>D:/Programming/Unity/VR-Roller-Coaster-Designer-and-Ride-Simulator/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/Programming/Unity/VR-Roller-Coaster-Designer-and-Ride-Simulator/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -420,6 +405,9 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="Vuforia.UnityExtensions">
+      <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/VuforiaSupport/Managed/Runtime/Vuforia.UnityExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.GoogleAudioSpatializer">
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
     </Reference>
@@ -430,10 +418,10 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/Korbo/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.analytics@2.0.16/UnityEngine.Analytics.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
-      <HintPath>C:/Users/Korbo/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/unity/mscorlib.dll</HintPath>

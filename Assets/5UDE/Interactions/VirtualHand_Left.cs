@@ -86,6 +86,10 @@ public class VirtualHand_Left : MonoBehaviour
             // Process current open state
             else
             {
+                if(button.GetPress()) {
+                    GameObject rider = GameObject.Find("Rider");
+                    rider.GetComponent<Rider>().moving = !rider.GetComponent<Rider>().moving;
+                }
                 // Nothing to do for open
             }
         }
