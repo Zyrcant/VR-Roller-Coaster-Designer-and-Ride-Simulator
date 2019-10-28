@@ -132,7 +132,6 @@ public class Steering : MonoBehaviour {
 
 			// Process current steering backward state
 			else {
-
 				// Translate the space based on the tracker's absolute forward direction and the joystick's backward value
 				space.transform.position += joystick.GetAxis ().y * tracker.transform.forward * speed * Time.deltaTime;
 			}

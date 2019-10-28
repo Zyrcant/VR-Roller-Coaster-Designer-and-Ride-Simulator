@@ -16,15 +16,22 @@ public class Rider : MonoBehaviour {
 
 	public int global_index = 0;
 
-	public Camera cam;
+    //vive space
+    public CommonSpace space;
 
-	void Awake() {
+    private bool scaled = false;
+
+    void Awake() {
 		spline = GameObject.Find("Spline").GetComponent<Spline>();
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if(moving) {
+            if (!scaled){
+                space.transform.localScale -= new Vector3(0.4f, 0.4f, 0.4f);
+                scaled = true;
+            }
 			if(distance == 0.0f) {
 				spline.CalculateDistance();
 			}
@@ -36,10 +43,9 @@ public class Rider : MonoBehaviour {
 			GameObject indexed_control_point = spline.points[index/200];
 			Vector3 indexed_curve_point = spline.curvePoints[index];
 			gameObject.transform.position = indexed_curve_point;
-
 			gameObject.transform.rotation = Quaternion.Slerp(spline.points[index/200].transform.rotation, spline.points[index/200+1].transform.rotation, ((index%200)+1f)/200.0f);
-			cam.transform.position = gameObject.transform.position;
-			cam.transform.rotation = gameObject.transform.rotation;
+            space.transform.position = gameObject.transform.position - new Vector3(0.0f, 0.3f, 0.0f);
+            space.transform.rotation = gameObject.transform.rotation;
 		}
 	}
 
