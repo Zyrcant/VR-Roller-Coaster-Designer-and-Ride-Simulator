@@ -8,11 +8,7 @@ public class Spline : MonoBehaviour
     public List<GameObject> points = new List<GameObject>();
     //TODO: interpolate distance using these curvepoints
     public List<Vector3> curvePoints = new List<Vector3>();
-    public List<float> curvePointsDist = new List<float>();
-
-    public List<float> normalizedCurvePointsDist = new List<float>();
-
-    
+    public List<double> curvePointsDist = new List<double>();
 
     public void RedrawSpline()
     {
@@ -26,7 +22,6 @@ public class Spline : MonoBehaviour
             for (int i = 0; i < points.Count - 1; i++) {
                 CalculateCatmullRom(i);
             }
-            normalizeDists();
         }
     }
 
@@ -37,12 +32,15 @@ public class Spline : MonoBehaviour
 
         if (points.Count >= 2) {
             for (int i = -3; i < -1; i++) {
-                if (index + i > -1)
+                if (index + i > -1 && index + i < points.Count - 1) {
+                    // CalculateCatmullRom(index + i);
                     RecalculateCatmullRom(index + i);
+                }
             }
 
             CalculateCatmullRom(index - 1);
-        normalizeDists();
+            // CalculateDistance();
+        // normalizeDists();
         }
     }
 
@@ -58,7 +56,9 @@ public class Spline : MonoBehaviour
                 if (index + i > -1 && index + i < points.Count - 1)
                     RecalculateCatmullRom(index + i);
             }
-            normalizeDists();
+            // CalculateDistance();
+            // normalizeDists();
+            CalculateQuaternions();
         }
     }
 
@@ -67,17 +67,15 @@ public class Spline : MonoBehaviour
     {
         int index = points.IndexOf(target);
         
-        CalculateQuaternions();
 
         points.Remove(target);
+        CalculateQuaternions();
         int lastIndex = 0;
         if (points.Count >= 2) {
             for (int i = -2; i <= 2; i++) {
                 if (index + i > -1 && index + i < points.Count - 1)
                     RecalculateCatmullRom(index + i);
             }
-            
-        normalizeDists();
         }
 
         if (points.Count >= 1) {
@@ -86,8 +84,8 @@ public class Spline : MonoBehaviour
             for (int x = ((index + lastIndex) * (numSegments)); x < ((index + lastIndex + 1) * (numSegments)); x++) {
                 DestroyImmediate(lines.GetChild((index + lastIndex) * (numSegments)).gameObject);
             }
-            
         }
+        // CalculateDistance();
     }
 
     void CalculateCatmullRom(int index)
@@ -109,12 +107,6 @@ public class Spline : MonoBehaviour
 
         Vector3 lastPos = p1;
 
-        if (curvePoints.Count > 0)
-            curvePointsDist.Add(Vector3.Distance(curvePoints[curvePoints.Count - 1], lastPos) +
-                                curvePointsDist[curvePointsDist.Count - 1]);
-        else
-            curvePointsDist.Add(0f);
-
         curvePoints.Add(lastPos);
         for (int i = 1; i <= numSegments; i++) {
             float t = i / (float) numSegments;
@@ -135,8 +127,6 @@ public class Spline : MonoBehaviour
             line.SetPosition(1, newPos);
 
             //add to curve points list
-            curvePointsDist.Add(Vector3.Distance(curvePoints[curvePoints.Count - 1], newPos) +
-                                curvePointsDist[curvePointsDist.Count - 1]);
             curvePoints.Add(newPos);
             lastPos = newPos;
         }
@@ -162,7 +152,10 @@ public class Spline : MonoBehaviour
 
         Vector3 lastPos = p1;
 
-        curvePoints[index * numSegments] = lastPos;
+        if(index * numSegments < curvePoints.Count)
+            curvePoints[index * numSegments] = lastPos;
+        else
+            curvePoints.Add(lastPos);
 
         GameObject lines = GameObject.Find("Lines");
 
@@ -178,8 +171,6 @@ public class Spline : MonoBehaviour
 
             //add to curve points list
             curvePoints[index * numSegments + i] = newPos;
-            curvePointsDist[index * numSegments + i] =
-                (Vector3.Distance(lastPos, newPos) + curvePointsDist[curvePointsDist.Count - 1]);
             lastPos = newPos;
         }
     }
@@ -205,22 +196,19 @@ public class Spline : MonoBehaviour
         }
     }
 
-    void normalizeDists() {
-        float max = curvePointsDist[curvePointsDist.Count-1];
-        for (int i = 0; i < curvePointsDist.Count; i++) {
-            if(normalizedCurvePointsDist.Count > i)
-                normalizedCurvePointsDist[i] = curvePointsDist[i] / max;
-            else
-                normalizedCurvePointsDist.Add(curvePointsDist[i]/max);
+    public void CalculateDistance()
+    {
+        curvePointsDist.Clear();
+        double cumulativeDistance = 0;
+        curvePointsDist.Add(0.0f);
+        for (int i = 1; i <= curvePoints.Count - 1; i++)
+        {
+            cumulativeDistance += Vector3.Distance(curvePoints[i], curvePoints[i-1]);
+            curvePointsDist.Add(cumulativeDistance);
         }
     }
 
-    public int indexOfDist(float dist) {
-        for(int i = 0; i < curvePointsDist.Count; i++) {
-            if(dist < normalizedCurvePointsDist[i])
-                return i;
-        }
-        return -1;
-    }
+    public void RecalculateDistance(int index) {
 
+    }
 }

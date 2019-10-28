@@ -15,7 +15,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{AF0DC098-D517-B4BB-E998-E93D250E245C}</ProjectGuid>
+    <ProjectGuid>{C3010728-19C5-D2E6-01D2-8C877442C8CA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -91,6 +91,27 @@
     <Compile Include="Assets\Scripts\Rider.cs" />
     <Compile Include="Assets\Scripts\Sphere.cs" />
     <Compile Include="Assets\Scripts\Spline.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Bezier\CubicBezierCurve.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Bezier\Spline.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Bezier\SplineNode.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Bezier\SplineSample.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Bezier\SplineSmoother.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleContortAlong.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleFollowSpline.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleGrowingRoot.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleSower.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleTentacle.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Example\ExampleTrack.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Example\RopeBuilder.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\ExtrusionSegment.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\MeshBender.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\MeshVertex.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\SourceMesh.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\SplineExtrusion.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\MeshProcessing\SplineMeshTiling.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Utils\CameraUtility.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Utils\MeshUtility.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Utils\UOUtility.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_GazeTracker.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_LaserPointer.cs" />
     <Compile Include="Assets\SteamVR\Extras\SteamVR_Teleporter.cs" />
@@ -197,6 +218,7 @@
     <None Include="Assets\SteamVR\Resources\SteamVR_ClearAll.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Hints\Shaders\ControllerButtonHints.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Teleport\Shaders\Highlight.shader" />
+    <None Include="Assets\SplineMesh\Doc.txt" />
     <None Include="Assets\SteamVR\Resources\SteamVR_SphericalProjection.shader" />
     <None Include="Assets\SteamVR\Resources\SteamVR_AlphaOut.shader" />
     <None Include="Assets\SteamVR\readme.txt" />
@@ -205,16 +227,16 @@
     <None Include="Assets\SteamVR\InteractionSystem\Core\Shaders\SeeThru.shader" />
     <None Include="Assets\SteamVR\InteractionSystem\Readme_InteractionSystem.txt" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Downloads/VR-Roller-Coaster-Designer-and-Ride-Simulatorr/VR-Roller-Coaster-Designer-and-Ride-Simulator-7f8ba5f3e7ed35d5ac543476e643750592391f64/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Downloads/VR-Roller-Coaster-Designer-and-Ride-Simulatorr/VR-Roller-Coaster-Designer-and-Ride-Simulator-7f8ba5f3e7ed35d5ac543476e643750592391f64/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Downloads/VR-Roller-Coaster-Designer-and-Ride-Simulatorr/VR-Roller-Coaster-Designer-and-Ride-Simulator-7f8ba5f3e7ed35d5ac543476e643750592391f64/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Downloads/VR-Roller-Coaster-Designer-and-Ride-Simulatorr/VR-Roller-Coaster-Designer-and-Ride-Simulator-7f8ba5f3e7ed35d5ac543476e643750592391f64/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

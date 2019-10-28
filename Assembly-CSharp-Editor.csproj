@@ -15,7 +15,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace>
     </RootNamespace>
-    <ProjectGuid>{0755CE68-DA87-7727-0120-5802C92D1F40}</ProjectGuid>
+    <ProjectGuid>{DBEC4BAD-D11E-F414-05AF-E86D36F1D1BE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
@@ -65,6 +65,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\SplineMesh\Scripts\Editor\SplineEditor.cs" />
+    <Compile Include="Assets\SplineMesh\Scripts\Editor\SplineExtrusionEditor.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_Editor.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_Preferences.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_RenderModelEditor.cs" />
@@ -72,16 +74,16 @@
     <Compile Include="Assets\SteamVR\Editor\SteamVR_SkyboxEditor.cs" />
     <Compile Include="Assets\SteamVR\Editor\SteamVR_Update.cs" />
     <Reference Include="UnityEditor.StandardEvents">
-      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Downloads/VR-Roller-Coaster-Designer-and-Ride-Simulatorr/VR-Roller-Coaster-Designer-and-Ride-Simulator-7f8ba5f3e7ed35d5ac543476e643750592391f64/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Downloads/VR-Roller-Coaster-Designer-and-Ride-Simulatorr/VR-Roller-Coaster-Designer-and-Ride-Simulator-7f8ba5f3e7ed35d5ac543476e643750592391f64/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PackageManagerUI.Editor">
-      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Downloads/VR-Roller-Coaster-Designer-and-Ride-Simulatorr/VR-Roller-Coaster-Designer-and-Ride-Simulator-7f8ba5f3e7ed35d5ac543476e643750592391f64/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Downloads/VR-Roller-Coaster-Designer-and-Ride-Simulatorr/VR-Roller-Coaster-Designer-and-Ride-Simulator-7f8ba5f3e7ed35d5ac543476e643750592391f64/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -351,7 +353,7 @@
       <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="JetBrains.Rider.Unity.Editor.Plugin.Repacked">
-      <HintPath>C:/Users/dsy160030/Desktop/VR-Roller-Coaster-Designer-and-Ride-Simulator-master/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
+      <HintPath>C:/Users/dsy160030/Downloads/VR-Roller-Coaster-Designer-and-Ride-Simulatorr/VR-Roller-Coaster-Designer-and-Ride-Simulator-7f8ba5f3e7ed35d5ac543476e643750592391f64/Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Advertisements">
       <HintPath>C:/Users/dsy160030/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.ads@2.0.8/Editor/UnityEditor.Advertisements.dll</HintPath>
@@ -404,7 +406,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp.csproj">
-      <Project>{AF0DC098-D517-B4BB-E998-E93D250E245C}</Project>
+      <Project>{C3010728-19C5-D2E6-01D2-8C877442C8CA}</Project>
       <Name>Assembly-CSharp</Name>
     </ProjectReference>
   </ItemGroup>
