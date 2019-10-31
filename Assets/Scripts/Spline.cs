@@ -22,12 +22,12 @@ public class Spline : MonoBehaviour
             for (int i = 0; i < points.Count - 1; i++) {
                 CalculateCatmullRom(i);
             }
+            CalculateQuaternions();
         }
     }
 
     public void RedrawSplineForAdd(GameObject target)
     {
-        CalculateQuaternions();
         int index = points.IndexOf(target);
 
         if (points.Count >= 2) {
@@ -40,7 +40,7 @@ public class Spline : MonoBehaviour
 
             CalculateCatmullRom(index - 1);
             // CalculateDistance();
-        // normalizeDists();
+            CalculateQuaternions();
         }
     }
 
@@ -57,7 +57,6 @@ public class Spline : MonoBehaviour
                     RecalculateCatmullRom(index + i);
             }
             // CalculateDistance();
-            // normalizeDists();
             CalculateQuaternions();
         }
     }
@@ -69,13 +68,13 @@ public class Spline : MonoBehaviour
         
 
         points.Remove(target);
-        CalculateQuaternions();
         int lastIndex = 0;
         if (points.Count >= 2) {
             for (int i = -2; i <= 2; i++) {
                 if (index + i > -1 && index + i < points.Count - 1)
                     RecalculateCatmullRom(index + i);
             }
+            CalculateQuaternions();
         }
 
         if (points.Count >= 1) {
@@ -192,7 +191,6 @@ public class Spline : MonoBehaviour
                 points[i].transform.LookAt(points[i+1].transform);
             else
                 points[i].transform.rotation = Quaternion.LookRotation(points[i+1].transform.position - points[i-1].transform.position, Vector3.up);
-                // points[i].transform.LookAt((points[i+1].transform.position + points[i-1].transform.position)/2);
         }
     }
 
@@ -210,5 +208,12 @@ public class Spline : MonoBehaviour
 
     public void RecalculateDistance(int index) {
 
+    }
+
+    public int indexOfDist(double dist)
+    {
+        int index = 0;
+        while (index < curvePointsDist.Count && curvePointsDist[index++] < dist) ;
+        return index-1;
     }
 }

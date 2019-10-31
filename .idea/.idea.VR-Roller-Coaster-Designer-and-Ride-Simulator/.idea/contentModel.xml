@@ -47,6 +47,7 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="Rider.cs" t="Include" />
           <e p="Sphere.cs" t="Include" />
           <e p="Spline.cs" t="Include" />
         </e>

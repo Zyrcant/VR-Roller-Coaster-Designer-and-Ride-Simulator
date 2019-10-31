@@ -86,9 +86,14 @@ public class VirtualHand_Left : MonoBehaviour
             // Process current open state
             else
             {
+                // If left hand button pressed while not touching a cube, start Riding Mode
                 if(button.GetPress()) {
                     GameObject rider = GameObject.Find("Rider");
-                    rider.GetComponent<Rider>().moving = !rider.GetComponent<Rider>().moving;
+                    GameObject spline = GameObject.Find("Spline");
+                    spline.GetComponent<Spline>().CalculateDistance();
+                    rider.GetComponent<Transform>().position = spline.transform.position;
+                    rider.GetComponent<Transform>().rotation = spline.transform.rotation;
+                    rider.GetComponent<Rider>().ridingMode = !rider.GetComponent<Rider>().ridingMode;
                 }
                 // Nothing to do for open
             }
