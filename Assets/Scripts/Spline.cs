@@ -133,7 +133,7 @@ public class Spline : MonoBehaviour
 
     void RecalculateCatmullRom(int index)
     {
-        Debug.Log("Index: " + index);
+        // Debug.Log("Index: " + index);
         Vector3 p0, p1, p2, p3;
 
         p1 = points[index].transform.position;

@@ -20,9 +20,9 @@ public class Rider : MonoBehaviour {
     //vive space
     public CommonSpace space;
 
-    private double gravity = 0.98;
+    public double gravity = 0.98;
     
-    private double velocity = 0.02;
+    public double velocity = 0.02;
     
     private bool scaled = false;
 
@@ -83,13 +83,30 @@ public class Rider : MonoBehaviour {
 			
 			// Movement
 			int index = spline.indexOfDist(distance);
-			//int index = global_index++;
+			// int index = global_index++;
 			last_point_index = index;
 			Vector3 indexed_curve_point = spline.curvePoints[index];
 			gameObj.transform.position = indexed_curve_point;
-			gameObj.transform.rotation = Quaternion.Slerp(spline.points[index/200].transform.rotation, spline.points[index/200+1].transform.rotation, ((index%200)+1f)/200.0f);
+			Quaternion slerp = Quaternion.Slerp(spline.points[index/200].transform.rotation, spline.points[index/200+1].transform.rotation, ((index%200)+1f)/200.0f);
+			// Quaternion temp = Quaternion.FromToRotation(gameObj.transform.rotation, Quaternion.Slerp(spline.points[index/200].transform.rotation, spline.points[index/200+1].transform.rotation, ((index%200)+1f)/200.0f));
+			// Quaternion relative = gameObj.transform.rotation * Quaternion.Inverse(slerp);
+			gameObj.transform.rotation = slerp;
+
+			// Move Vive input
 			spaceTransform.position = gameObj.transform.position - new Vector3(0.0f, 0.3f, 0.0f);
 			spaceTransform.rotation = gameObj.transform.rotation;
+			// spaceTransform.rotation = relative * spaceTransform.rotation;
+
+			
+                    // Transform eye = spaceTransform.Find("Vive Camera (eye)");
+			
+                    // // Get current head heading in scene (y-only, to avoid tilting the floor)
+                    // float offsetXAngle = eye.rotation.eulerAngles.x;
+                    // float offsetAngle = eye.rotation.eulerAngles.y;
+                    // float offsetZAngle = eye.rotation.eulerAngles.z;
+                    // // Now rotate CameraRig in opposite direction to compensate
+                    // space.transform.rotation = gameObj.transform.rotation;
+                    // space.transform.Rotate(-offsetXAngle, -offsetAngle, -offsetZAngle);
 		}
 	}
 

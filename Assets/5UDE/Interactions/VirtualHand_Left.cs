@@ -58,6 +58,9 @@ public class VirtualHand_Left : MonoBehaviour
     FixedJoint grasp;
     private GameObject spawnedObject;
 
+    // Modify Space
+    private CommonSpace space;
+
     // Called at the end of the program initialization
     void Start()
     {
@@ -67,6 +70,8 @@ public class VirtualHand_Left : MonoBehaviour
 
         // Ensure hand interactive is properly configured
         hand.type = AffectType.Virtual;
+
+        space = GameObject.Find("Vive").transform.Find("Vive Input").GetComponent<CommonSpace>();
     }
 
     // FixedUpdate is not called every graphical frame but rather every physics frame
@@ -79,7 +84,7 @@ public class VirtualHand_Left : MonoBehaviour
             // If the hand is touching something
             if (hand.triggerOngoing)
             {
-                // Change state to touching
+                // Change state to touching     
                 state = VirtualHandState.Touching;
             }
 
@@ -90,10 +95,23 @@ public class VirtualHand_Left : MonoBehaviour
                 if(button.GetPress()) {
                     GameObject rider = GameObject.Find("Rider");
                     GameObject spline = GameObject.Find("Spline");
+                    Transform eye = space.transform.Find("Vive Camera (eye)");
                     spline.GetComponent<Spline>().CalculateDistance();
+                    rider.GetComponent<Rider>().distance = 0;
+                    rider.GetComponent<Rider>().velocity = 0.02;
+                    
+                    // //ROTATION
+                    // // Get current head heading in scene (y-only, to avoid tilting the floor)
+                    // float offsetXAngle = eye.rotation.eulerAngles.x;
+                    // float offsetAngle = eye.rotation.eulerAngles.y;
+                    // float offsetZAngle = eye.rotation.eulerAngles.z;
+                    // // Now rotate CameraRig in opposite direction to compensate
+                    // space.transform.rotation = spline.transform.rotation; 
+                    // space.transform.Rotate(-offsetXAngle, -offsetAngle, -offsetZAngle);
+
                     rider.GetComponent<Transform>().position = spline.transform.position;
                     rider.GetComponent<Transform>().rotation = spline.transform.rotation;
-                    rider.GetComponent<Rider>().ridingMode = !rider.GetComponent<Rider>().ridingMode;
+                    rider.GetComponent<Rider>().ridingMode = true;
                 }
                 // Nothing to do for open
             }
