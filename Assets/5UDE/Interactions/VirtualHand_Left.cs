@@ -61,6 +61,9 @@ public class VirtualHand_Left : MonoBehaviour
     // Modify Space
     private CommonSpace space;
 
+	private bool pressing = false;
+	private Vector3 originalScale;
+
     // Called at the end of the program initialization
     void Start()
     {
@@ -93,6 +96,7 @@ public class VirtualHand_Left : MonoBehaviour
             {
                 // If left hand button pressed while not touching a cube, start Riding Mode
                 if(button.GetPress()) {
+					pressing = true;
                     GameObject rider = GameObject.Find("Rider");
                     GameObject spline = GameObject.Find("Spline");
                     Transform eye = space.transform.Find("Vive Camera (eye)");
@@ -111,8 +115,14 @@ public class VirtualHand_Left : MonoBehaviour
 
                     rider.GetComponent<Transform>().position = spline.transform.position;
                     rider.GetComponent<Transform>().rotation = spline.transform.rotation;
-                    rider.GetComponent<Rider>().ridingMode = true;
-                }
+					rider.GetComponent<Rider>().offset = eye.rotation;
+					if (!rider.GetComponent<Rider>().ridingMode) {
+						originalScale = space.transform.localScale;
+					}
+                    rider.GetComponent<Rider>().ridingMode = !rider.GetComponent<Rider>().ridingMode;
+                } else {
+					pressing = false;
+				}
                 // Nothing to do for open
             }
         }

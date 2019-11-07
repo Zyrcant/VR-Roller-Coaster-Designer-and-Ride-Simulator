@@ -24,7 +24,11 @@ public class Rider : MonoBehaviour {
     
     public double velocity = 0.02;
     
+	public Quaternion offset;
+	
     private bool scaled = false;
+	
+	private Transform originalTransform;
 
     private int last_point_index = 0;
 
@@ -41,6 +45,7 @@ public class Rider : MonoBehaviour {
 			
 			// Scale Vive Input for coaster
             if (!scaled){
+				originalTransform = spaceTransform;
 	            spaceTransform.localScale -= new Vector3(0.4f, 0.4f, 0.4f);
                 scaled = true;
             }
@@ -107,6 +112,9 @@ public class Rider : MonoBehaviour {
                     // // Now rotate CameraRig in opposite direction to compensate
                     // space.transform.rotation = gameObj.transform.rotation;
                     // space.transform.Rotate(-offsetXAngle, -offsetAngle, -offsetZAngle);
+		} else {
+			scaled = false;
+			spaceTransform.transform = originalTransform;
 		}
 	}
 
