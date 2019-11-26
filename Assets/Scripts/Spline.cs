@@ -35,13 +35,12 @@ public class Spline : MonoBehaviour
                 if (index + i > -1 && index + i < points.Count - 1) {
                     // CalculateCatmullRom(index + i);
                     RecalculateCatmullRom(index + i);
-					RecalcuateQuaternion(index + i);
                 }
             }
 
             CalculateCatmullRom(index - 1);
             // CalculateDistance();
-            // CalculateQuaternions();
+            CalculateQuaternions();
         }
     }
 
@@ -54,13 +53,11 @@ public class Spline : MonoBehaviour
         //Draw the Catmull-Rom spline between the points
         if (points.Count >= 2) {
             for (int i = -2; i <= 2; i++) {
-                if (index + i > -1 && index + i < points.Count - 1){
+                if (index + i > -1 && index + i < points.Count - 1)
                     RecalculateCatmullRom(index + i);
-					RecalcuateQuaternion(index + i);
-				}
             }
             // CalculateDistance();
-            // CalculateQuaternions();
+            CalculateQuaternions();
         }
     }
 
@@ -74,12 +71,10 @@ public class Spline : MonoBehaviour
         int lastIndex = 0;
         if (points.Count >= 2) {
             for (int i = -2; i <= 2; i++) {
-                if (index + i > -1 && index + i < points.Count - 1) {
+                if (index + i > -1 && index + i < points.Count - 1)
                     RecalculateCatmullRom(index + i);
-					RecalcuateQuaternion(index + i);
-				}
             }
-            // CalculateQuaternions();
+            CalculateQuaternions();
         }
 
         if (points.Count >= 1) {
@@ -87,6 +82,9 @@ public class Spline : MonoBehaviour
             lastIndex = Math.Min(points.Count - index - 1, 2);
             for (int x = ((index + lastIndex) * (numSegments)); x < ((index + lastIndex + 1) * (numSegments)); x++) {
                 DestroyImmediate(lines.GetChild((index + lastIndex) * (numSegments)).gameObject);
+            }
+            for (int x = ((index + lastIndex) * (numSegments)); x <= ((index + lastIndex + 1) * (numSegments)); x++) {
+                curvePoints.Remove(curvePoints[((index + lastIndex) * (numSegments))]);
             }
         }
         // CalculateDistance();
@@ -123,9 +121,9 @@ public class Spline : MonoBehaviour
             line.startWidth = 0.025f;
             line.endWidth = 0.025f;
             line.material = Resources.Load("LineMaterial", typeof(Material)) as Material;
-            line.material.color = Color.red;
-            line.startColor = Color.red;
-            line.endColor = Color.red;
+            line.material.color = Color.blue;
+            line.startColor = Color.blue;
+            line.endColor = Color.blue;
 
             line.SetPosition(0, lastPos);
             line.SetPosition(1, newPos);
@@ -197,17 +195,8 @@ public class Spline : MonoBehaviour
             else
                 points[i].transform.rotation = Quaternion.LookRotation(points[i+1].transform.position - points[i-1].transform.position, Vector3.up);
         }
-		points[points.Count-1].transform.rotation = points[points.Count-2].transform.rotation;
+        points[points.Count-1].transform.rotation = points[points.Count-2].transform.rotation;
     }
-	
-	void RecalcuateQuaternion(int index) {
-		if(index == 0)
-			points[index].transform.LookAt(points[index+1].transform);
-		else if (index == point.Count-1)
-			points[index].transform.rotation = points[index-1].transform.rotation;
-		else
-            points[index].transform.rotation = Quaternion.LookRotation(points[index+1].transform.position - points[index-1].transform.position, Vector3.up);
-	}
 
     public void CalculateDistance()
     {
