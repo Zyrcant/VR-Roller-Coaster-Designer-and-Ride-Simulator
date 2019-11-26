@@ -83,6 +83,9 @@ public class VirtualHand_Left : MonoBehaviour
                     GameObject spline = GameObject.Find("Spline");
                     // Transform hmd = space.transform.Find("Vive HMD");
                     Transform eye = space.transform.Find("Vive Camera (eye)");
+					if(eye == null) {
+						eye = space.transform.Find("Vive HMD");
+					}
                     spline.GetComponent<Spline>().CalculateDistance();
                     rider.GetComponent<Rider>().distance = 0;
                     rider.GetComponent<Rider>().velocity = 0.02;
