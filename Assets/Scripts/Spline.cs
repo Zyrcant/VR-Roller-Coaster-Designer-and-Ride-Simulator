@@ -83,6 +83,9 @@ public class Spline : MonoBehaviour
             for (int x = ((index + lastIndex) * (numSegments)); x < ((index + lastIndex + 1) * (numSegments)); x++) {
                 DestroyImmediate(lines.GetChild((index + lastIndex) * (numSegments)).gameObject);
             }
+            for (int x = ((index + lastIndex) * (numSegments)); x <= ((index + lastIndex + 1) * (numSegments)); x++) {
+                curvePoints.Remove(curvePoints[((index + lastIndex) * (numSegments))]);
+            }
         }
         // CalculateDistance();
     }
@@ -118,9 +121,9 @@ public class Spline : MonoBehaviour
             line.startWidth = 0.025f;
             line.endWidth = 0.025f;
             line.material = Resources.Load("LineMaterial", typeof(Material)) as Material;
-            line.material.color = Color.red;
-            line.startColor = Color.red;
-            line.endColor = Color.red;
+            line.material.color = Color.blue;
+            line.startColor = Color.blue;
+            line.endColor = Color.blue;
 
             line.SetPosition(0, lastPos);
             line.SetPosition(1, newPos);
@@ -192,6 +195,7 @@ public class Spline : MonoBehaviour
             else
                 points[i].transform.rotation = Quaternion.LookRotation(points[i+1].transform.position - points[i-1].transform.position, Vector3.up);
         }
+        points[points.Count-1].transform.rotation = points[points.Count-2].transform.rotation;
     }
 
     public void CalculateDistance()

@@ -11,7 +11,6 @@ public class Rider : MonoBehaviour {
 
 	public double distance = 0.0;
 
-	public float time = 0.0f;
 
 	public Spline spline;
 
@@ -20,13 +19,24 @@ public class Rider : MonoBehaviour {
     //vive space
     public CommonSpace space;
 
-    public double gravity = 0.98;
+    public double gravity = 0.40;
     
     public double velocity = 0.02;
+	public double minVelocity = 0.2;
     
-    private bool scaled = false;
+    public bool scaled = false;
+    public float scale = 0.6f;
 
-    private int last_point_index = 0;
+    public int last_point_index = 0;
+
+	public Quaternion offset;
+	public Vector3 positionOffset;
+
+	public Quaternion originalRotation;
+	public Vector3 originalPosition;
+	public Vector3 originalScale;
+
+	private GameObject tempObject;
 
     void Awake() {
 		spline = GameObject.Find("Spline").GetComponent<Spline>();
@@ -41,18 +51,27 @@ public class Rider : MonoBehaviour {
 			
 			// Scale Vive Input for coaster
             if (!scaled){
-	            spaceTransform.localScale -= new Vector3(0.4f, 0.4f, 0.4f);
+				originalScale = new Vector3(1.0f, 1.0f, 1.0f);
+				originalPosition = new Vector3(0.0f,0.0f,0.0f) + spaceTransform.position;
+				originalRotation = Quaternion.identity * spaceTransform.rotation;
+//				spaceTransform.Translate(-positionOffset.x, -positionOffset.y, -positionOffset.z);
+	            spaceTransform.rotation = Quaternion.identity;
+	            spaceTransform.Rotate(-offset.eulerAngles.x,-offset.eulerAngles.y,-offset.eulerAngles.z);
+	            spaceTransform.localScale = new Vector3(1f,1f,1f) * scale;
                 scaled = true;
             }
 //			if(distance == 0.0) {
 //				spline.CalculateDistance();
 //			}
-
+			if(last_point_index == spline.curvePoints.Count - 1)
+				return;
 			// 2 Point calcs
 			Vector3 lastpoint, nextpoint;
+			if(last_point_index > spline.curvePoints.Count)
+				last_point_index = spline.curvePoints.Count-1;
 			lastpoint = spline.curvePoints[last_point_index];
 			if (last_point_index + 1 >= spline.curvePoints.Count) {
-				ridingMode = false;
+				// ridingMode = false;
 				last_point_index = spline.curvePoints.Count - 2;
 			}
 			nextpoint = spline.curvePoints[last_point_index + 1];
@@ -73,13 +92,16 @@ public class Rider : MonoBehaviour {
 			
 			float delta_time = Time.fixedDeltaTime;
 			double angle = Math.Atan2(y_diff, xz_dist);
-//			double angle = Math.Atan2(y_diff3, xz_dist3);
+			// double angle = Math.Atan2(y_diff3, xz_dist3);
 
 			// Acceleration physics
 			double acceleration = (angle / 1.57) * gravity;
+			if(velocity < minVelocity)
+				velocity = minVelocity;
 			distance += (velocity + (acceleration * delta_time / 2)) * delta_time;
 			velocity += acceleration * delta_time;
-			time += delta_time;
+			if(velocity < minVelocity)
+				velocity = minVelocity;
 			
 			// Movement
 			int index = spline.indexOfDist(distance);
@@ -87,15 +109,26 @@ public class Rider : MonoBehaviour {
 			last_point_index = index;
 			Vector3 indexed_curve_point = spline.curvePoints[index];
 			gameObj.transform.position = indexed_curve_point;
-			Quaternion slerp = Quaternion.Slerp(spline.points[index/200].transform.rotation, spline.points[index/200+1].transform.rotation, ((index%200)+1f)/200.0f);
-			// Quaternion temp = Quaternion.FromToRotation(gameObj.transform.rotation, Quaternion.Slerp(spline.points[index/200].transform.rotation, spline.points[index/200+1].transform.rotation, ((index%200)+1f)/200.0f));
+			Quaternion slerp;
+			if(index/200 < spline.points.Count - 1)
+				slerp = Quaternion.Slerp(spline.points[index/200].transform.rotation, spline.points[index/200+1].transform.rotation, ((index%200)+1f)/200.0f);
+			else
+				slerp = spline.points[index/200].transform.rotation;
+			if (index + 1 < spline.curvePoints.Count)
+				slerp = Quaternion.LookRotation(spline.curvePoints[index + 1] - spline.curvePoints[index], Vector3.up);
+			else {
+				slerp = gameObj.transform.rotation;
+			}
+			Quaternion diff = slerp * Quaternion.Inverse(gameObj.transform.rotation); 
+//			Quaternion temp = Quaternion.FromToRotation(gameObj.transform.rotation, Quaternion.Slerp(spline.points[index/200].transform.rotation, spline.points[index/200+1].transform.rotation, ((index%200)+1f)/200.0f));
 			// Quaternion relative = gameObj.transform.rotation * Quaternion.Inverse(slerp);
 			gameObj.transform.rotation = slerp;
 
 			// Move Vive input
-			spaceTransform.position = gameObj.transform.position - new Vector3(0.0f, 0.3f, 0.0f);
-			spaceTransform.rotation = gameObj.transform.rotation;
-			// spaceTransform.rotation = relative * spaceTransform.rotation;
+			spaceTransform.position = gameObj.transform.position + new Vector3(0.0f, scale, 0.0f);
+			spaceTransform.rotation = diff * spaceTransform.rotation;
+			spaceTransform.Translate(-positionOffset.x*scale, -positionOffset.y*scale, -positionOffset.z*scale);
+//			spaceTransform.rotation = gameObj.transform.rotation;
 
 			
                     // Transform eye = spaceTransform.Find("Vive Camera (eye)");
@@ -107,6 +140,16 @@ public class Rider : MonoBehaviour {
                     // // Now rotate CameraRig in opposite direction to compensate
                     // space.transform.rotation = gameObj.transform.rotation;
                     // space.transform.Rotate(-offsetXAngle, -offsetAngle, -offsetZAngle);
+		}
+		else if(scaled) {
+			scaled = false;
+			Transform spaceTransform = space.transform;
+			spaceTransform.localScale = originalScale;
+			spaceTransform.position = originalPosition;
+			spaceTransform.rotation = originalRotation;
+			last_point_index = 0;
+			distance = 0.0;
+			velocity = 0.02;
 		}
 	}
 

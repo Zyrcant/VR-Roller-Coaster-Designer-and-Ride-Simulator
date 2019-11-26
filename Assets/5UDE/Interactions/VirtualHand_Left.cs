@@ -47,6 +47,8 @@ public class VirtualHand_Left : MonoBehaviour
     [Tooltip("The button required to be pressed to grab objects.")]
     public CommonButton button;
 
+    public CommonButton toggleButton;
+    
     [Tooltip("The object to spawn when clicking in an empty area.")]
     public GameObject spawnPrefab;
 
@@ -61,6 +63,8 @@ public class VirtualHand_Left : MonoBehaviour
     // Modify Space
     private CommonSpace space;
 
+    public bool riding, pressing;
+
     // Called at the end of the program initialization
     void Start()
     {
@@ -74,31 +78,17 @@ public class VirtualHand_Left : MonoBehaviour
         space = GameObject.Find("Vive").transform.Find("Vive Input").GetComponent<CommonSpace>();
     }
 
-    // FixedUpdate is not called every graphical frame but rather every physics frame
-    void FixedUpdate()
-    {
-
-        // If state is open
-        if (state == VirtualHandState.Open)
-        {
-            // If the hand is touching something
-            if (hand.triggerOngoing)
-            {
-                // Change state to touching     
-                state = VirtualHandState.Touching;
-            }
-
-            // Process current open state
-            else
-            {
-                // If left hand button pressed while not touching a cube, start Riding Mode
-                if(button.GetPress()) {
+    void ride() {
                     GameObject rider = GameObject.Find("Rider");
                     GameObject spline = GameObject.Find("Spline");
+                    // Transform hmd = space.transform.Find("Vive HMD");
                     Transform eye = space.transform.Find("Vive Camera (eye)");
                     spline.GetComponent<Spline>().CalculateDistance();
                     rider.GetComponent<Rider>().distance = 0;
                     rider.GetComponent<Rider>().velocity = 0.02;
+                    rider.GetComponent<Rider>().last_point_index = 0;
+                    rider.GetComponent<Rider>().offset = eye.rotation;
+                    rider.GetComponent<Rider>().positionOffset = eye.localPosition;
                     
                     // //ROTATION
                     // // Get current head heading in scene (y-only, to avoid tilting the floor)
@@ -111,7 +101,60 @@ public class VirtualHand_Left : MonoBehaviour
 
                     rider.GetComponent<Transform>().position = spline.transform.position;
                     rider.GetComponent<Transform>().rotation = spline.transform.rotation;
-                    rider.GetComponent<Rider>().ridingMode = true;
+                    rider.GetComponent<Rider>().ridingMode = riding;
+    }
+    // FixedUpdate is not called every graphical frame but rather every physics frame
+    void FixedUpdate()
+    {
+        Debug.Log(state);
+
+        // If state is open
+        if (state == VirtualHandState.Open)
+        {
+            // If the hand is touching something
+            if (hand.triggerOngoing)
+            {
+                // If object is destroyed, ignore it
+                if(!hand.ongoingTriggers[0]) {
+                    if (toggleButton.GetPressDown() && !riding && !pressing) {
+                        pressing = true;
+                        riding = true;
+                        ride();
+                    } else if(toggleButton.GetPressDown() && riding && !pressing) {
+                        pressing = true;
+                        riding = false;
+                        GameObject.Find("Rider").GetComponent<Rider>().ridingMode = riding;
+                    } else if(!toggleButton.GetPressDown()) {
+                        pressing = false;
+                    }
+                    if (toggleButton.GetPressDown()) {
+                        Debug.Log("Pressing button");
+                    }
+                } else {
+
+                }
+                // Change state to touching     
+                state = VirtualHandState.Touching;
+            }
+
+            // Process current open state
+            else
+            {
+                // If left hand button pressed while not touching a cube, start Riding Mode
+                if (toggleButton.GetPressDown() && !riding && !pressing)
+                {
+                    pressing = true;
+                    riding = true;
+                    ride();
+                } else if(toggleButton.GetPressDown() && riding && !pressing) {
+                    pressing = true;
+                    riding = false;
+                    GameObject.Find("Rider").GetComponent<Rider>().ridingMode = riding;
+                } else if(!toggleButton.GetPressDown()) {
+                    pressing = false;
+                }
+                if (toggleButton.GetPressDown()) {
+                    Debug.Log("Pressing button");
                 }
                 // Nothing to do for open
             }
@@ -130,34 +173,49 @@ public class VirtualHand_Left : MonoBehaviour
             }
 
             // If the hand is touching something and the button is pressed
-            else if (hand.triggerOngoing && button.GetPress())
+            else if (hand.triggerOngoing)
             {
                 // If object is destroyed, ignore it
-                if(!hand.ongoingTriggers[0]) return;
+                if(!hand.ongoingTriggers[0]) {
+                    if (toggleButton.GetPressDown() && !riding && !pressing)
+                    {
+                        
+                        pressing = true;
+                        riding = true;
+                        ride();
 
-                // Fetch touched target
-                Collider target = hand.ongoingTriggers[0];
-                
-                if (target.gameObject.GetComponent<Sphere>().type == "Sphere")
-                {
-                    var sphere = target.gameObject;
-//                    sphere.GetComponentInParent<Spline>().points.Remove(sphere);
-                    if (sphere.GetComponent<FixedJoint>() != null) {
+                    } else if(toggleButton.GetPressDown() && riding && !pressing) {
+                        pressing = true;
+                        riding = false;
+                        GameObject.Find("Rider").GetComponent<Rider>().ridingMode = riding;
+                    } else if(!toggleButton.GetPressDown()) {
+                        pressing = false;
+                    }
+                    if (toggleButton.GetPressDown()) {
+                        Debug.Log("Pressing button");
+                    }
+                    return;
+                }
+
+                if(button.GetPress()) {
+                    // Fetch touched target
+                    Collider target = hand.ongoingTriggers[0];
+                    
+                    if (target.gameObject.GetComponent<Sphere>().type == "Sphere")
+                    {
+                        var sphere = target.gameObject;
+                        if (sphere.GetComponent<FixedJoint>() != null) {
+                            state = VirtualHandState.Open;
+                            return;
+                        }
+                        sphere.GetComponentInParent<Spline>().RedrawSplineForDelete(sphere);
+                        Destroy(sphere);
+                        state = VirtualHandState.Open;
                         return;
                     }
-
-                    sphere.GetComponentInParent<Spline>().RedrawSplineForDelete(sphere);
-                    Destroy(sphere);
-                    state = VirtualHandState.Open;
                 }
-                
-                // Create a fixed joint between the hand and the target
-                grasp = target.gameObject.AddComponent<FixedJoint>();
-                
-                // Set the connection
-                grasp.connectedBody = hand.gameObject.GetComponent<Rigidbody>();
-                
-                state = VirtualHandState.Open;
+
+
             }
 
             // Process current touching state
